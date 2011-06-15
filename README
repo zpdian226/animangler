@@ -1,0 +1,11 @@
+README
+by Phil Cote
+http://www.blenderpythontutorials.com
+
+PURPOSE: 
+The result of experimentation with shape key programming.  Basically, all that was done was I took the original mesh_mangler logic and applied it to the creation of a meshes shape keys.
+
+USAGE:
+The panel site in the view 3d tools panel.  You adjust the slider to the degree of how wild you want the random shape key to be and you hit the button to create them.
+
+Once done, you can go into the shape keys, rename them as you see fit, and start keyframing away to create your own morphing shifting blob creature.
