@@ -19,9 +19,9 @@
 bl_info = {
     "name": "Animangler",
     "author": "Philip Cote ( cotejrp1 )",
-    "version": (1, 0, 0 ),
-    "blender": (2, 5, 7),
-    "api": 35853,
+    "version": (1, 0, 1 ),
+    "blender": (2, 5, 8),
+    "api": 37702,
     "location": "VIEW3D -> TOOLS",
     "description": "Create a shape key for a mesh and move the vertices around randonly",
     "warning": "",
@@ -52,17 +52,17 @@ class AnimanglerOperator(bpy.types.Operator):
         return ob != None and ob.type == 'MESH'
 
     def execute(self, context):
-        
+        scn = context.scene
         random.seed( time.time() )
-        randomMag = bpy.context.scene.randomMagnitude
-        
+        randomMag = scn.randomMagnitude
+        mangleName = scn.mangleName
         ob = context.object
-        shapeKey = ob.shape_key_add()
+        shapeKey = ob.shape_key_add( name=mangleName )
         verts = shapeKey.data
         
         for vert in verts:
             xVal = .01 * random.randrange( -randomMag, randomMag )
-            yVal = .01 * random.randrange( -randomMag, randomMag)
+            yVal = .01 * random.randrange( -randomMag, randomMag )
             zVal = .01 * random.randrange( -randomMag, randomMag )
             vert.co.x = vert.co.x + xVal
             vert.co.y = vert.co.y + yVal
@@ -84,6 +84,8 @@ class AnimanglerPanel( bpy.types.Panel ):
         layout = self.layout
         col = layout.column()
         col.prop( scn, "randomMagnitude" )
+        row = layout.row()
+        row.prop( scn, "mangleName" )
         col.operator( "bpt.ani_mangler" )
         
     
@@ -94,6 +96,7 @@ def register():
     scnType.randomMagnitude = bpy.props.IntProperty( name = "How Much Mangling", 
                                                  default = 5, min = 1, max = 20, 
                             description = "The (+) and (-) number range for a random number to be picked from" )
+    scnType.mangleName = bpy.props.StringProperty( name = "Key Name", default = "Key" )
 
 
 def unregister():
